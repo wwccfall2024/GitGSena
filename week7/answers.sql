@@ -100,3 +100,18 @@ CREATE TABLE equipped (
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
+
+CREATE OR REPLACE VIEW character_items AS
+  SELECT crctrs.character_id AS character_id, crctrs.name AS character_name, itms.name AS item_name, itms.armor AS armor, itms.damage AS damage
+    FROM characters crctrs      
+    INNER JOIN inventory invntry     
+    ON crctrs.character_id=invntry.character_id
+    INNER JOIN items itms
+    ON itms.item_id=invntry.item_id     
+    UNION
+    SELECT crctrs.character_id AS character_id, crctrs.name AS character_name, itms.name AS item_name, itms.armor AS armor, itms.damage AS damage
+    FROM characters crctrs      
+    INNER JOIN equipped equpd     
+    ON crctrs.character_id=equpd.character_id
+    INNER JOIN items itms
+    ON itms.item_id=equpd.item_id;      
