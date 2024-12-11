@@ -138,3 +138,23 @@ CREATE OR REPLACE VIEW team_items AS
     ON characters.character_id=invntry.character_id
     INNER JOIN items itms
     ON itms.item_id=invntry.item_id;     
+
+DELIMITER ;;
+CREATE FUNCTION get_armor_total(character_id INT UNSIGNED)
+RETURNS INT UNSIGNED
+DETERMINISTIC
+BEGIN
+	-- can't have negative armor
+	DECLARE armor_total INT UNSIGNED;
+  -- know I'm missing something to isolate equipped armor by each character but unsure what or where it'd go.
+    SELECT SUM(character_stats.armor+items.armor) INTO armor_total
+    FROM characters      
+    INNER JOIN equipped
+    ON characters.character_id=equipped.character_id
+    INNER JOIN items
+    ON items.item_id=equipped.item_id
+    INNER JOIN character_stats     
+    ON character_stats.character_id=characters.character_id;
+    RETURN armor_total;
+END;;
+DELIMITER ;
