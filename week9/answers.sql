@@ -69,9 +69,10 @@ CREATE TABLE notifications (
 CREATE OR REPLACE VIEW notification_posts AS
   SELECT notifications.user_id AS user_id, users.first_name AS first_name, users.last_name AS last_name, posts.post_id AS post_id, posts.content AS content
     FROM notifications      
-    INNER JOIN users    
-    ON notifications.user_id=users.user_id
-    INNER JOIN posts
+    LEFT OUTER JOIN posts
     ON posts.user_id=users.user_id
+    LEFT OUTER JOIN users    
+    ON notifications.user_id=users.user_id
+    INNER JOIN 
  -- unsure if this is right or what is next. need organized from most recent and include null posts?
    
