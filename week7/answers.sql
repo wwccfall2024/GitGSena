@@ -115,7 +115,7 @@ CREATE OR REPLACE VIEW character_items AS
     ON crctrs.character_id=invntry.character_id
     INNER JOIN items itms
     ON itms.item_id=invntry.item_id
-	ORDER BY itms.name;     
+	ORDER BY items.name ASC;     
    
 CREATE OR REPLACE VIEW team_items AS
   SELECT teams.team_id AS team_id, teams.name AS team_name, itms.name AS item_name, itms.armor AS armor, itms.damage AS damage
@@ -139,7 +139,7 @@ CREATE OR REPLACE VIEW team_items AS
     ON characters.character_id=invntry.character_id
     INNER JOIN items itms
     ON itms.item_id=invntry.item_id
-	ORDER BY itms.name;     
+	ORDER BY items.name ASC;     
 
 DELIMITER ;;
 CREATE FUNCTION armor_total(char_id INT UNSIGNED)
