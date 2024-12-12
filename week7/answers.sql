@@ -114,7 +114,8 @@ CREATE OR REPLACE VIEW character_items AS
     INNER JOIN inventory invntry     
     ON crctrs.character_id=invntry.character_id
     INNER JOIN items itms
-    ON itms.item_id=invntry.item_id;     
+    ON itms.item_id=invntry.item_id
+	ORDER BY itms.name;     
    
 CREATE OR REPLACE VIEW team_items AS
   SELECT teams.team_id AS team_id, teams.name AS team_name, itms.name AS item_name, itms.armor AS armor, itms.damage AS damage
@@ -137,12 +138,12 @@ CREATE OR REPLACE VIEW team_items AS
     INNER JOIN inventory invntry     
     ON characters.character_id=invntry.character_id
     INNER JOIN items itms
-    ON itms.item_id=invntry.item_id;     
+    ON itms.item_id=invntry.item_id
+	ORDER BY itms.name;     
 
 DELIMITER ;;
-CREATE FUNCTION get_armor_total(character_id INT UNSIGNED)
+CREATE FUNCTION armor_total(char_id INT UNSIGNED)
 RETURNS INT UNSIGNED
-DETERMINISTIC
 BEGIN
 	-- can't have negative armor
 	DECLARE armor_total INT UNSIGNED;
